@@ -24,10 +24,14 @@ class ArchiveScreen extends StatelessWidget {
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: item['type'] == 'إيداع' ? Colors.green : Colors.red,
-                child: Text(item['count'].toString(), style: const TextStyle(color: Colors.white)),
+                child: Text(
+                  item['count'].toString(),
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
               title: Text('${item['type']} - ${item['amount']}'),
-              subtitle: Text(item['date']),
+              // ✅ التصحيح: استخدام toString() لتحويل القيمة إلى String
+              subtitle: Text(item['date']?.toString() ?? ''),
             ),
           );
         },
