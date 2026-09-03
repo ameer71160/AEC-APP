@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/app_theme.dart';   // ✅ إضافة هذا الاستيراد
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -40,6 +41,7 @@ class CustomTextField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
+          // ✅ الآن AppTheme معرف بشكل صحيح
           borderSide: const BorderSide(color: AppTheme.primaryColor, width: 2),
         ),
         filled: true,
