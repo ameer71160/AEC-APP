@@ -3,9 +3,7 @@ name: Build AEC Community APK
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-  workflow_dispatch:   # تتيح لك التشغيل يدوياً من تبويب Actions
+  workflow_dispatch:
 
 jobs:
   build-android:
@@ -18,29 +16,55 @@ jobs:
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.0'   # يمكنك تغييرها لأحدث إصدار مستقر
+          flutter-version: '3.22.0'
           channel: 'stable'
 
-      - name: 📦 Install dependencies
-        run: flutter pub get
-
-      - name: 🔍 Verify project structure
+      - name: 🏗️ Create fresh Flutter project with all Android files
         run: |
-          flutter clean
+          # إنشاء مجلد مؤقت للمشروع الجديد
+          mkdir fresh_app
+          cd fresh_app
+          flutter create --org com.aec --project-name aec_community .
+          cd ..
+
+      - name: 🔄 Replace with your custom code and assets
+        run: |
+          # حذف المجلدات الأصلية التي سنستبدلها
+          rm -rf fresh_app/lib
+          rm -rf fresh_app/assets
+
+          # نسخ ملفاتك من المستودع إلى المشروع الجديد
+          cp -r lib fresh_app/
+          cp -r assets fresh_app/ 2>/dev/null || true   # تجاهل إن لم يكن موجوداً
+          
+          # استبدال pubspec.yaml بملفك (إن وجد)
+          cp pubspec.yaml fresh_app/ 2>/dev/null || true
+
+      - name: 📦 Install dependencies in the fresh project
+        run: |
+          cd fresh_app
           flutter pub get
 
+      - name: 🛠️ Fix Gradle wrapper (ensure compatibility)
+        run: |
+          cd fresh_app/android
+          chmod +x gradlew
+          ./gradlew --version
+
       - name: 🏗️ Build APK (release)
-        run: flutter build apk --release --split-per-abi
+        run: |
+          cd fresh_app
+          flutter build apk --release --split-per-abi
 
       - name: 📤 Upload APK files
         uses: actions/upload-artifact@v4
         with:
           name: aec-apk-files
-          path: build/app/outputs/flutter-apk/*.apk
+          path: fresh_app/build/app/outputs/flutter-apk/*.apk
 
       - name: 📤 Upload app bundle (optional)
         uses: actions/upload-artifact@v4
         with:
           name: aec-appbundle
-          path: build/app/outputs/bundle/release/app-release.aab
+          path: fresh_app/build/app/outputs/bundle/release/app-release.aab
         if: always()
