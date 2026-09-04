@@ -49,7 +49,7 @@ class LogoWidget extends StatelessWidget {
         ).animate(onPlay: (controller) => controller.repeat())
          .scale(duration: 1500.ms, begin: const Offset(0.9, 0.9), end: const Offset(1.1, 1.1))
          .then()
-         .rotate(duration: 2000.ms, begin: -0.05, end: 0.05),
+         .rotate(duration: 2000.ms, begin: 0.0, end: 1.0),
         if (showName) ...[
           const SizedBox(height: 4),
           Text(
