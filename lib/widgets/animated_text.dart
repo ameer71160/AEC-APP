@@ -26,7 +26,7 @@ class _AnimatedTextState extends State<AnimatedText> with SingleTickerProviderSt
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(milliseconds: widget.text.length * widget.speed ~/ 2),
+      duration: Duration(milliseconds: 2000),
       vsync: this,
     );
     _animation = Tween<Offset>(begin: Offset(-1, 0), end: Offset(1, 0)).animate(
