@@ -1,5 +1,5 @@
 name: aec_community_ui
-description: UI prototype for AEC Community App
+description: AEC Community App - Full version with security and features
 version: 1.0.0
 
 environment:
@@ -8,13 +8,44 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # UI and animations
   flutter_animate: ^4.1.0
+  
+  # Secure storage (for tokens, passwords, encryption keys)
+  flutter_secure_storage: ^9.0.0
+  
+  # Local notifications
+  flutter_local_notifications: ^17.0.0
+  timezone: ^0.9.0
+  
+  # Email sending (for OTP)
+  mailer: ^6.0.0
+  
+  # Database (SQLite) with encryption support
+  sqflite: ^2.3.0
+  path_provider: ^2.1.0
+  path: ^1.9.0
+  
+  # Encryption and hashing
+  pointycastle: ^3.7.3
+  crypto: ^3.0.3
+  
+  # Device info for security checks
+  device_info_plus: ^9.1.0
+  
+  # For sharing and file operations
+  share_plus: ^7.2.1
+  
+  # For background tasks (optional)
+  workmanager: ^0.5.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
- # assets:
-#    - assets/images/
+  # assets:
+  #   - assets/images/   # يمكنك تفعيلها إذا أضفت صوراً
