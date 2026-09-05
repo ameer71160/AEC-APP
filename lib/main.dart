@@ -12,6 +12,9 @@ import 'screens/privacy_screen.dart';
 import 'screens/my_notifications_screen.dart';
 import 'screens/about_screen.dart';
 import 'screens/archive_screen.dart';
+import 'screens/settings_screen.dart';
+import 'screens/suggestions_screen.dart';
+import 'screens/member_info_screen.dart';
 import 'utils/app_theme.dart';
 
 void main() => runApp(const MyApp());
@@ -33,13 +36,15 @@ class MyApp extends StatelessWidget {
         '/admin_dashboard': (context) => const AdminDashboard(),
         '/members_list': (context) => const MembersListScreen(),
         '/member_detail': (context) => const MemberDetailScreen(),
-        '/deposit': (context) => const DepositScreen(),
+        '/suggestions': (context) => const SuggestionsScreen(), // جديد
         '/features': (context) => const FeaturesScreen(),
         '/terms': (context) => const TermsScreen(),
         '/privacy': (context) => const PrivacyScreen(),
         '/notifications': (context) => const MyNotificationsScreen(),
         '/about': (context) => const AboutScreen(),
         '/archive': (context) => const ArchiveScreen(),
+        '/settings': (context) => const SettingsScreen(), // جديد
+        '/member_info': (context) => const MemberInfoScreen(), // سيتم إضافته لاحقاً
       },
     );
   }
