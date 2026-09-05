@@ -30,52 +30,22 @@ jobs:
           # حذف الملفات القديمة
           rm -rf lib
           
-          # نسخ كودك
+          # نسخ كودك (من المستودع)
           cp -r ../lib .
           
-          # نسخ pubspec.yaml المعدل
-          cat > pubspec.yaml << 'EOF'
-          name: aec_community
-          description: AEC Community App
-          version: 1.0.0
-          
-          environment:
-            sdk: ">=3.0.0 <4.0.0"
-          
-          dependencies:
-            flutter:
-              sdk: flutter
-            flutter_animate: ^4.1.0
-            flutter_secure_storage: ^9.0.0
-            flutter_local_notifications: ^17.0.0
-            timezone: ^0.9.0
-            sqflite: ^2.3.0
-            path_provider: ^2.1.0
-            path: ^1.9.0
-            crypto: ^3.0.3
-            device_info_plus: ^9.1.0
-            share_plus: ^7.2.1
-            intl: ^0.18.0
-          
-          dev_dependencies:
-            flutter_test:
-              sdk: flutter
-            flutter_lints: ^3.0.0
-          
-          flutter:
-            uses-material-design: true
-          EOF
+          # نسخ pubspec.yaml المعدل (من المستودع)
+          cp ../pubspec.yaml .
           
           # تثبيت التبعيات
           flutter pub get
           
           cd ..
 
-      - name: 🔧 Fix Kotlin/Gradle versions
+      - name: 🔧 Replace Gradle files with compatible versions
         run: |
           cd fresh_app/android
           
-          # تغيير إصدار Kotlin في build.gradle
+          # استبدال ملف build.gradle (project level)
           cat > build.gradle << 'EOF'
           buildscript {
               ext.kotlin_version = '1.9.0'
@@ -109,8 +79,8 @@ jobs:
               delete rootProject.buildDir
           }
           EOF
-          
-          # تغيير gradle-wrapper.properties
+
+          # استبدال ملف gradle-wrapper.properties
           cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
           distributionBase=GRADLE_USER_HOME
           distributionPath=wrapper/dists
@@ -119,10 +89,12 @@ jobs:
           zipStorePath=wrapper/dists
           EOF
           
+          # منح صلاحيات التنفيذ لـ gradlew
           chmod +x gradlew
+          
           cd ../..
 
-      - name: 🏗️ Build APK
+      - name: 🏗️ Build APK (release)
         run: |
           cd fresh_app
           flutter build apk --release --split-per-abi
