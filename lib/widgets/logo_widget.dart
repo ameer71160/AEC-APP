@@ -11,7 +11,7 @@ class LogoWidget extends StatelessWidget {
     super.key,
     this.size = 60,
     this.showName = false,
-    this.rotateFull = false, // افتراضياً لا يدور كاملاً إلا إذا طُلب
+    this.rotateFull = false, // القيمة الافتراضية false
   });
 
   @override
@@ -50,9 +50,9 @@ class LogoWidget extends StatelessWidget {
          .scale(duration: 1500.ms, begin: const Offset(0.9, 0.9), end: const Offset(1.1, 1.1))
          .then()
          .rotate(
-           duration: rotateFull ? 4000.ms : 2000.ms, // دوران كامل 360 درجة
+           duration: rotateFull ? 4000.ms : 2000.ms,
            begin: 0,
-           end: rotateFull ? 6.2832 : 0.1, // 6.2832 راديان = 360 درجة
+           end: rotateFull ? 6.2832 : 0.1, // 6.2832 = 360 درجة
          ),
         if (showName) ...[
           const SizedBox(height: 4),
@@ -85,7 +85,6 @@ class _AECLogoPainter extends CustomPainter {
     final radius = size.width / 2 * 0.85;
     canvas.drawCircle(center, radius, paint);
 
-    // نجم خلفية بسيط
     final starPaint = Paint()
       ..color = Colors.white.withOpacity(0.15)
       ..style = PaintingStyle.fill;
