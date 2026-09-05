@@ -39,24 +39,28 @@ jobs:
           cd fresh_app
           flutter pub get
 
-      - name: 🔧 Fix Kotlin version conflict - Method 1
+      - name: 🔧 Fix Kotlin version to 1.9.0 + Gradle 8.0
         run: |
           cd fresh_app/android
-          # تحديث إصدار Kotlin في build.gradle
+          
+          # 1. تحديث إصدار Kotlin في build.gradle (project level)
           sed -i 's/ext.kotlin_version = .*/ext.kotlin_version = "1.9.0"/' build.gradle
           
-          # إضافة إعدادات إضافية لحل التعارضات
-          echo 'configurations.all { resolutionStrategy { force "org.jetbrains.kotlin:kotlin-stdlib:1.9.0" force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0" } }' >> build.gradle
+          # 2. تحديث Gradle wrapper إلى الإصدار 8.0 (متوافق مع Kotlin 1.9.0)
+          sed -i 's/distributionUrl=.*/distributionUrl=https\\:\\/\\/services.gradle.org\\/distributions\\/gradle-8.0-all.zip/' gradle/wrapper/gradle-wrapper.properties
           
-          echo "✅ Kotlin version updated to 1.9.0"
-
-      - name: 🔧 Fix Kotlin version conflict - Method 2 (alternative)
-        run: |
-          cd fresh_app/android/app
-          # إضافة إعدادات إضافية في app/build.gradle
-          echo 'configurations.all { resolutionStrategy { force "org.jetbrains.kotlin:kotlin-stdlib:1.9.0" force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0" } }' >> build.gradle
+          # 3. إضافة resolutionStrategy لحل التعارضات في build.gradle (project level)
+          echo '' >> build.gradle
+          echo 'subprojects {' >> build.gradle
+          echo '    configurations.all {' >> build.gradle
+          echo '        resolutionStrategy {' >> build.gradle
+          echo '            force "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"' >> build.gradle
+          echo '            force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0"' >> build.gradle
+          echo '        }' >> build.gradle
+          echo '    }' >> build.gradle
+          echo '}' >> build.gradle
           
-          echo "✅ Additional Kotlin configurations added"
+          echo "✅ Kotlin version = 1.9.0, Gradle = 8.0"
 
       - name: 🛠️ Fix Gradle wrapper permissions
         run: |
