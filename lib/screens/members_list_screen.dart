@@ -12,6 +12,7 @@ class MembersListScreen extends StatelessWidget {
         title: const Text('قائمة الأعضاء'),
         actions: [
           IconButton(icon: const Icon(Icons.add), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.edit), onPressed: () {}),
         ],
       ),
       body: SingleChildScrollView(
@@ -20,14 +21,16 @@ class MembersListScreen extends StatelessWidget {
           scrollDirection: Axis.vertical,
           child: DataTable(
             columnSpacing: 16,
-            headingRowColor: MaterialStateProperty.all(AppTheme.primaryColor.withOpacity(0.1)),
+            headingRowColor: MaterialStateProperty.all(
+              AppTheme.primaryColor.withOpacity(0.1),
+            ),
             columns: const [
               DataColumn(label: Text('اسم العضو', style: TextStyle(fontWeight: FontWeight.bold))),
               DataColumn(label: Text('المبلغ الكلي', style: TextStyle(fontWeight: FontWeight.bold))),
               DataColumn(label: Text('مبلغ السحب', style: TextStyle(fontWeight: FontWeight.bold))),
               DataColumn(label: Text('المبلغ المجمد', style: TextStyle(fontWeight: FontWeight.bold))),
               DataColumn(label: Text('المبلغ المودع', style: TextStyle(fontWeight: FontWeight.bold))),
-              DataColumn(label: Text('مبلغ السحب بعد الإيداع', style: TextStyle(fontWeight: FontWeight.bold))),
+              // ✅ تم حذف عمود "مبلغ السحب بعد الإيداع"
             ],
             rows: MockData.members.map((member) {
               return DataRow(
@@ -37,7 +40,10 @@ class MembersListScreen extends StatelessWidget {
                       onTap: () => Navigator.pushNamed(context, '/member_detail'),
                       child: Text(
                         member['fullName'],
-                        style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
                   ),
@@ -45,7 +51,6 @@ class MembersListScreen extends StatelessWidget {
                   DataCell(Text(member['withdraw'].toString())),
                   DataCell(Text(member['frozen'].toString())),
                   DataCell(Text(member['deposited'].toString())),
-                  DataCell(Text(member['afterWithdraw'].toString())),
                 ],
               );
             }).toList(),
