@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../widgets/logo_widget.dart';
 import '../utils/app_theme.dart';
+import 'advance_payment_screen.dart';
+import 'pay_other_member_screen.dart';
+import 'cash_withdrawal_screen.dart';
 
 class MemberInfoScreen extends StatefulWidget {
   const MemberInfoScreen({super.key});
@@ -27,10 +30,33 @@ class _MemberInfoScreenState extends State<MemberInfoScreen> {
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) {
-              // سيتم ربط الخيارات لاحقاً
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('تم اختيار: $value')),
-              );
+              // التنقل إلى الصفحات المطلوبة
+              switch (value) {
+                case 'سداد مقدم':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AdvancePaymentScreen(),
+                    ),
+                  );
+                  break;
+                case 'سداد لحساب عضو آخر':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PayOtherMemberScreen(),
+                    ),
+                  );
+                  break;
+                case 'سحب نقدي':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CashWithdrawalScreen(),
+                    ),
+                  );
+                  break;
+              }
             },
             itemBuilder: (context) => const [
               PopupMenuItem(value: 'سداد مقدم', child: Text('سداد مقدم')),
@@ -57,7 +83,7 @@ class _MemberInfoScreenState extends State<MemberInfoScreen> {
             ),
             const SizedBox(height: 24),
             
-            // الجدول المطلوب (4 أعمدة × صفان)
+            // الجدول (4 أعمدة × صفان)
             Card(
               elevation: 4,
               child: Padding(
@@ -112,7 +138,14 @@ class _MemberInfoScreenState extends State<MemberInfoScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8),
-                          child: Text(availableAmount.toStringAsFixed(0), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green)),
+                          child: Text(
+                            availableAmount.toStringAsFixed(0),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -123,7 +156,7 @@ class _MemberInfoScreenState extends State<MemberInfoScreen> {
             
             const SizedBox(height: 24),
             
-            // سجل العمليات (بيانات وهمية)
+            // سجل العمليات
             const Text(
               'سجل العمليات',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -133,29 +166,52 @@ class _MemberInfoScreenState extends State<MemberInfoScreen> {
               child: ListView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  ListTile(
-                    leading: Icon(Icons.arrow_downward, color: Colors.green),
-                    title: Text('إيداع'),
-                    subtitle: Text('2026/08/18 10:00 ص'),
-                    trailing: Text('+300', style: TextStyle(color: Colors.green)),
+                children: [
+                  _buildTransactionItem(
+                    type: 'إيداع',
+                    amount: 300,
+                    date: '2026/08/18 10:00 ص',
+                    isDeposit: true,
                   ),
-                  ListTile(
-                    leading: Icon(Icons.arrow_upward, color: Colors.red),
-                    title: Text('سحب'),
-                    subtitle: Text('2026/08/18 09:00 ص'),
-                    trailing: Text('-200', style: TextStyle(color: Colors.red)),
+                  _buildTransactionItem(
+                    type: 'سحب',
+                    amount: 200,
+                    date: '2026/08/18 09:00 ص',
+                    isDeposit: false,
                   ),
-                  ListTile(
-                    leading: Icon(Icons.arrow_downward, color: Colors.green),
-                    title: Text('إيداع'),
-                    subtitle: Text('2026/08/17 11:00 ص'),
-                    trailing: Text('+500', style: TextStyle(color: Colors.green)),
+                  _buildTransactionItem(
+                    type: 'إيداع',
+                    amount: 500,
+                    date: '2026/08/17 11:00 ص',
+                    isDeposit: true,
                   ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTransactionItem({
+    required String type,
+    required double amount,
+    required String date,
+    required bool isDeposit,
+  }) {
+    return ListTile(
+      leading: Icon(
+        isDeposit ? Icons.arrow_downward : Icons.arrow_upward,
+        color: isDeposit ? Colors.green : Colors.red,
+      ),
+      title: Text(type),
+      subtitle: Text(date),
+      trailing: Text(
+        isDeposit ? '+$amount' : '-$amount',
+        style: TextStyle(
+          color: isDeposit ? Colors.green : Colors.red,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
