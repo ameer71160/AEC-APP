@@ -39,13 +39,24 @@ jobs:
           cd fresh_app
           flutter pub get
 
-      - name: 🔧 Fix Kotlin version conflict
+      - name: 🔧 Fix Kotlin version conflict - Method 1
         run: |
           cd fresh_app/android
-          # استبدال إصدار Kotlin في build.gradle
+          # تحديث إصدار Kotlin في build.gradle
           sed -i 's/ext.kotlin_version = .*/ext.kotlin_version = "1.9.0"/' build.gradle
-          # أو استخدام الأمر التالي للتأكد
+          
+          # إضافة إعدادات إضافية لحل التعارضات
+          echo 'configurations.all { resolutionStrategy { force "org.jetbrains.kotlin:kotlin-stdlib:1.9.0" force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0" } }' >> build.gradle
+          
           echo "✅ Kotlin version updated to 1.9.0"
+
+      - name: 🔧 Fix Kotlin version conflict - Method 2 (alternative)
+        run: |
+          cd fresh_app/android/app
+          # إضافة إعدادات إضافية في app/build.gradle
+          echo 'configurations.all { resolutionStrategy { force "org.jetbrains.kotlin:kotlin-stdlib:1.9.0" force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0" } }' >> build.gradle
+          
+          echo "✅ Additional Kotlin configurations added"
 
       - name: 🛠️ Fix Gradle wrapper permissions
         run: |
