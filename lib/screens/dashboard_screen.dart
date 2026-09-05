@@ -11,6 +11,7 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('AEC Community'),
+        centerTitle: true,
         actions: [
           IconButton(icon: const Icon(Icons.logout), onPressed: () {}),
         ],
@@ -53,13 +54,13 @@ class DashboardScreen extends StatelessWidget {
                         title: 'معلوماتي',
                         icon: Icons.person_outline,
                         color: Colors.blue,
-                        onTap: () {},
+                        onTap: () => Navigator.pushNamed(context, '/member_info'),
                       ),
                       DashboardCard(
-                        title: 'إيداع',
-                        icon: Icons.payments_outlined,
+                        title: 'الاقتراحات', // بدلاً من الإيداع
+                        icon: Icons.feedback_outlined,
                         color: Colors.green,
-                        onTap: () => Navigator.pushNamed(context, '/deposit'),
+                        onTap: () => Navigator.pushNamed(context, '/suggestions'),
                       ),
                       DashboardCard(
                         title: 'الميزات',
@@ -86,9 +87,15 @@ class DashboardScreen extends StatelessWidget {
                         onTap: () => Navigator.pushNamed(context, '/notifications'),
                       ),
                       DashboardCard(
+                        title: 'الإعدادات', // صفحة جديدة
+                        icon: Icons.settings_outlined,
+                        color: Colors.grey,
+                        onTap: () => Navigator.pushNamed(context, '/settings'),
+                      ),
+                      DashboardCard(
                         title: 'حول التطبيق',
                         icon: Icons.info_outline,
-                        color: Colors.grey,
+                        color: Colors.indigo,
                         onTap: () => Navigator.pushNamed(context, '/about'),
                       ),
                     ],
