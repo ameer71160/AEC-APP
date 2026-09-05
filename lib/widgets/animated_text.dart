@@ -9,7 +9,7 @@ class AnimatedText extends StatefulWidget {
   const AnimatedText({
     super.key,
     required this.text,
-    this.speed = 50,
+    this.speed = 80, // زيادة السرعة = أبطأ (كلما زاد الرقم، أصبح أبطأ)
     this.style = const TextStyle(fontSize: 16),
     this.textAlign = TextAlign.center,
   });
@@ -26,10 +26,10 @@ class _AnimatedTextState extends State<AnimatedText> with SingleTickerProviderSt
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(milliseconds: 2000),
+      duration: Duration(milliseconds: (widget.text.length * widget.speed).toInt()),
       vsync: this,
     );
-    _animation = Tween<Offset>(begin: Offset(-1, 0), end: Offset(1, 0)).animate(
+    _animation = Tween<Offset>(begin: const Offset(-1, 0), end: const Offset(1, 0)).animate(
       CurvedAnimation(parent: _controller, curve: Curves.linear),
     );
     _controller.repeat(reverse: true);
