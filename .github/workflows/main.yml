@@ -39,17 +39,19 @@ jobs:
           cd fresh_app
           flutter pub get
 
-      - name: 🔧 Fix Kotlin version to 1.9.0 + Gradle 8.0
+      - name: 🔧 Fix Kotlin version to 1.9.0 + Gradle 8.0 (using perl for reliability)
         run: |
           cd fresh_app/android
           
-          # 1. تحديث إصدار Kotlin في build.gradle (project level)
-          sed -i 's/ext.kotlin_version = .*/ext.kotlin_version = "1.9.0"/' build.gradle
+          # 1. تحديث إصدار Kotlin في build.gradle (استخدام perl للتأكد)
+          perl -pi -e 's/ext\.kotlin_version\s*=\s*.*/ext.kotlin_version = "1.9.0"/' build.gradle
           
-          # 2. تحديث Gradle wrapper إلى الإصدار 8.0 (متوافق مع Kotlin 1.9.0)
-          sed -i 's/distributionUrl=.*/distributionUrl=https\\:\\/\\/services.gradle.org\\/distributions\\/gradle-8.0-all.zip/' gradle/wrapper/gradle-wrapper.properties
+          # 2. تحديث Gradle wrapper إلى الإصدار 8.0 (متوافق)
+          cd gradle/wrapper
+          perl -pi -e 's|distributionUrl=.*|distributionUrl=https://services.gradle.org/distributions/gradle-8.0-all.zip|' gradle-wrapper.properties
+          cd ../..
           
-          # 3. إضافة resolutionStrategy لحل التعارضات في build.gradle (project level)
+          # 3. إضافة resolutionStrategy لتوحيد إصدار Kotlin (للتأكد من عدم التعارض)
           echo '' >> build.gradle
           echo 'subprojects {' >> build.gradle
           echo '    configurations.all {' >> build.gradle
