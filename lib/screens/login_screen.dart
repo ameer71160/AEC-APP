@@ -37,11 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  // شعار دوار 360 درجة
+                  // ✅ تم إضافة rotateFull: true
                   LogoWidget(size: 100, rotateFull: true),
                   const SizedBox(height: 20),
                   
-                  // نص ترحيبي متحرك ببطء
                   AnimatedText(
                     text: 'أهلاً بك في جمعيتنا المميزة AEC',
                     style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
@@ -49,7 +48,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 40),
                   
-                  // بطاقة الدخول
                   Card(
                     elevation: 20,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -80,10 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: TextButton(
-                                onPressed: () {
-                                  // إرسال كلمة مرور مؤقتة إلى البريد الإلكتروني
-                                  _showForgotPasswordDialog();
-                                },
+                                onPressed: _showForgotPasswordDialog,
                                 child: const Text('نسيت كلمة المرور؟', style: TextStyle(color: AppTheme.primaryColor)),
                               ),
                             ),
@@ -95,18 +90,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               keyboardType: TextInputType.phone,
                             ),
                             const SizedBox(height: 16),
-                            // حقل البريد الإلكتروني الجديد
                             CustomTextField(
                               controller: _emailController,
                               hintText: 'أدخل بريدك الإلكتروني',
                               prefixIcon: Icons.email_outlined,
                               keyboardType: TextInputType.emailAddress,
                               validator: (v) {
-                                 if (v != null && v.isNotEmpty && !v.contains('@')) {
-                                  return 'بريد إلكتروني غير صحيح';
-                                          }
-                                   return null; // يسمح بالمرور حتى لو كان فارغاً
-                               },
+                                if (v!.isEmpty) return 'يرجى إدخال البريد الإلكتروني';
+                                if (!v.contains('@')) return 'بريد إلكتروني غير صحيح';
+                                return null;
+                              },
                             ),
                             const SizedBox(height: 24),
                             SizedBox(
@@ -160,7 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
           TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
-              // إرسال OTP إلى البريد الإلكتروني (سيتم ربطه لاحقاً)
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('تم إرسال كلمة مرور مؤقتة إلى بريدك الإلكتروني')),
@@ -187,7 +179,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('تم إرسال طلب العضوية إلى الإدارة')),
               );
-              // في المستقبل: إرسال إشعار إلى صفحة الإدارة
             },
             child: const Text('إرسال'),
           ),
