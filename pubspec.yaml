@@ -1,5 +1,5 @@
-name: aec_community_ui
-description: AEC Community App - Full version with security and features
+name: aec_community
+description: AEC Community App - UI Version
 version: 1.0.0
 
 environment:
@@ -9,33 +9,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # UI and animations
+  # UI and animations فقط
   flutter_animate: ^4.1.0
-  
-  # Secure storage
-  flutter_secure_storage: ^9.0.0
-  
-  # Local notifications
-  flutter_local_notifications: ^17.0.0
-  timezone: ^0.9.0
-  
-  # Email sending
-  mailer: ^6.0.0
-  
-  # Database
-  sqflite: ^2.3.0
-  path_provider: ^2.1.0
-  path: ^1.9.0
-  
-  # Encryption
-  pointycastle: ^3.7.3
-  crypto: ^3.0.3
-  
-  # Device info
-  device_info_plus: ^9.1.0
-  
-  # Sharing
-  share_plus: ^7.2.1
 
 dev_dependencies:
   flutter_test:
