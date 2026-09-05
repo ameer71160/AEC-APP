@@ -13,7 +13,11 @@ import 'screens/about_screen.dart';
 import 'screens/archive_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/suggestions_screen.dart';
-import 'screens/member_info_screen.dart'; // ✅ الآن الملف موجود
+import 'screens/member_info_screen.dart';
+import 'screens/advance_payment_screen.dart';
+import 'screens/pay_other_member_screen.dart';
+import 'screens/cash_withdrawal_screen.dart';
+import 'screens/admin_notifications_screen.dart';
 import 'utils/app_theme.dart';
 
 void main() => runApp(const MyApp());
@@ -43,7 +47,11 @@ class MyApp extends StatelessWidget {
         '/about': (context) => const AboutScreen(),
         '/archive': (context) => const ArchiveScreen(),
         '/settings': (context) => const SettingsScreen(),
-        '/member_info': (context) => const MemberInfoScreen(), // ✅ الآن يعمل
+        '/member_info': (context) => const MemberInfoScreen(),
+        '/advance_payment': (context) => const AdvancePaymentScreen(),
+        '/pay_other_member': (context) => const PayOtherMemberScreen(),
+        '/cash_withdrawal': (context) => const CashWithdrawalScreen(),
+        '/admin_notifications': (context) => const AdminNotificationsScreen(),
       },
     );
   }
