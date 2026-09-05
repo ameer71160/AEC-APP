@@ -12,33 +12,30 @@ dependencies:
   # UI and animations
   flutter_animate: ^4.1.0
   
-  # Secure storage (for tokens, passwords, encryption keys)
+  # Secure storage
   flutter_secure_storage: ^9.0.0
   
   # Local notifications
   flutter_local_notifications: ^17.0.0
   timezone: ^0.9.0
   
-  # Email sending (for OTP)
+  # Email sending
   mailer: ^6.0.0
   
-  # Database (SQLite) with encryption support
+  # Database
   sqflite: ^2.3.0
   path_provider: ^2.1.0
   path: ^1.9.0
   
-  # Encryption and hashing
+  # Encryption
   pointycastle: ^3.7.3
   crypto: ^3.0.3
   
-  # Device info for security checks
+  # Device info
   device_info_plus: ^9.1.0
   
-  # For sharing and file operations
+  # Sharing
   share_plus: ^7.2.1
-  
-  # For background tasks (optional)
-  workmanager: ^0.5.1
 
 dev_dependencies:
   flutter_test:
@@ -48,4 +45,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   # assets:
-  #   - assets/images/   # يمكنك تفعيلها إذا أضفت صوراً
+  #   - assets/images/
