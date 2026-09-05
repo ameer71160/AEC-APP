@@ -5,13 +5,13 @@ import '../utils/app_theme.dart';
 class LogoWidget extends StatelessWidget {
   final double size;
   final bool showName;
-  final bool animated;
+  final bool rotateFull; // إضافة خاصية الدوران الكامل
 
   const LogoWidget({
     super.key,
     this.size = 60,
     this.showName = false,
-    this.animated = true,
+    this.rotateFull = false, // افتراضياً لا يدور كاملاً إلا إذا طُلب
   });
 
   @override
@@ -49,7 +49,11 @@ class LogoWidget extends StatelessWidget {
         ).animate(onPlay: (controller) => controller.repeat())
          .scale(duration: 1500.ms, begin: const Offset(0.9, 0.9), end: const Offset(1.1, 1.1))
          .then()
-         .rotate(duration: 2000.ms, begin: 0.0, end: 1.0),
+         .rotate(
+           duration: rotateFull ? 4000.ms : 2000.ms, // دوران كامل 360 درجة
+           begin: 0,
+           end: rotateFull ? 6.2832 : 0.1, // 6.2832 راديان = 360 درجة
+         ),
         if (showName) ...[
           const SizedBox(height: 4),
           Text(
@@ -66,7 +70,6 @@ class LogoWidget extends StatelessWidget {
   }
 }
 
-// رسم دائرة خلفية جميلة مع تدرج لوني بدلاً من الصورة
 class _AECLogoPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -82,12 +85,11 @@ class _AECLogoPainter extends CustomPainter {
     final radius = size.width / 2 * 0.85;
     canvas.drawCircle(center, radius, paint);
 
-    // إضافة شكل نجمي أو أيقونة بسيطة كخلفية للشعار
+    // نجم خلفية بسيط
     final starPaint = Paint()
       ..color = Colors.white.withOpacity(0.15)
       ..style = PaintingStyle.fill;
     
-    // رسم نجمة بسيطة
     final path = Path();
     const double outerRadius = 20;
     const double innerRadius = 10;
