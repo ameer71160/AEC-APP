@@ -9,7 +9,7 @@ class AnimatedText extends StatefulWidget {
   const AnimatedText({
     super.key,
     required this.text,
-    this.speed = 80, // زيادة السرعة = أبطأ (كلما زاد الرقم، أصبح أبطأ)
+    this.speed = 80,
     this.style = const TextStyle(fontSize: 16),
     this.textAlign = TextAlign.center,
   });
