@@ -102,10 +102,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               prefixIcon: Icons.email_outlined,
                               keyboardType: TextInputType.emailAddress,
                               validator: (v) {
-                                if (v!.isEmpty) return 'يرجى إدخال البريد الإلكتروني';
-                                if (!v.contains('@')) return 'بريد إلكتروني غير صحيح';
-                                return null;
-                              },
+                                 if (v != null && v.isNotEmpty && !v.contains('@')) {
+                                  return 'بريد إلكتروني غير صحيح';
+                                          }
+                                   return null; // يسمح بالمرور حتى لو كان فارغاً
+                               },
                             ),
                             const SizedBox(height: 24),
                             SizedBox(
